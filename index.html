@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Chest Puzzle</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- SVG filter for liquid glass effect -->
+    <svg width="0" height="0">
+      <filter id="glass-distortion">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" result="turb"/>
+        <feDisplacementMap in2="turb" in="SourceGraphic" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </svg>
+    <div class="container">
+        <h1 class="mb-4">Treasure Chest Puzzle</h1>
+        <p class="mb-4">Enter the Code to Unlock the Treasure!</p>
+        
+        <div class="treasure-chest" id="treasureChest">
+            <div class="chest-lid" id="chestLid"></div>
+            <div class="chest-lock">
+                <i class="fas fa-lock"></i>
+            </div>
+            <div class="chest-content" id="chestContent">
+                <img class="moai" id="moai" src="emotbatu.png" alt="Moai" style="width: 180px; height: auto;" />
+            </div>
+            <!-- Tambahkan gambar rune di sini -->
+            <div class="runes" style="display: flex; justify-content: center; gap: 12px; margin-bottom: 16px;">
+                <img src="rune1.png" alt="Rune 1" style="height: 48px; width: auto;">
+                <img src="rune2.png" alt="Rune 2" style="height: 48px; width: auto;">
+                <img src="rune3.png" alt="Rune 3" style="height: 48px; width: auto;">
+                <img src="rune4.png" alt="Rune 4" style="height: 48px; width: auto;">
+            </div>
+            <div class="code-input">
+                <input type="text" maxlength="1" class="code-digit" data-index="0">
+                <input type="text" maxlength="1" class="code-digit" data-index="1">
+                <input type="text" maxlength="1" class="code-digit" data-index="2">
+                <input type="text" maxlength="1" class="code-digit" data-index="3">
+            </div>
+        </div>
+
+        <button class="btn-submit" id="submitBtn">Buka Peti</button>
+        <button class="btn-submit" id="backBtn" style="display:none;">Back</button>
+
+        <div id="successMessage" style="display:none;">
+            <div class="success-box mt-4 p-4">
+                <i class="fas fa-star fa-3x mb-3" style="color:gold; animation: pop 0.7s;"></i>
+                <h2 class="mb-2" style="color:gold; font-weight:bold; letter-spacing:1px; animation: fadeInUp 1s;">Kamu Berhasil Membuka Kotak Ini</h2>
+                <p style="color:#fff; font-size:1.1rem; animation: fadeInUp 1.2s;">Selamat! Kamu menemukan harta karun tersembunyi 🎉</p>
+            </div>
+        </div>
+
+        <!-- Modal for error -->
+        <div class="modal-blur-bg" id="modalBlurBg"></div>
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+              <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Password kamu salah!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Success -->
+        <div class="modal-blur-bg" id="modalBlurBgSuccess"></div>
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+              <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Berhasil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Hore!! kamu berhasil menemukan passwordnya.
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="glitter-effect" id="glitterEffect"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
