@@ -83,6 +83,7 @@ body {
     opacity: 0;
     transition: opacity 0.5s, transform 0.5s;
     transform: scale(0.7);
+    z-index: 1;
 }
 
 .code-input {

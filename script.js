@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const digits = document.querySelectorAll('.code-digit');
+    console.log(digits);
     const submitBtn = document.getElementById('submitBtn');
     const backBtn = document.getElementById('backBtn');
     const treasureChest = document.getElementById('treasureChest');
@@ -7,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chestContent = document.getElementById('chestContent');
     const moai = document.getElementById('moai');
     const glitterEffect = document.getElementById('glitterEffect');
+    const runeContainer = document.getElementById('runes');
 
     const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
     const modalBlurBg = document.getElementById('modalBlurBg');
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Pindah otomatis ke input berikutnya
     digits.forEach((digit, index) => {
         digit.addEventListener('input', () => {
-            if (digit.value.length === 1 && index < digits.length - 1) {
+            if (digit.value.length === 2 && index < digits.length - 1) {
                 digits[index + 1].focus();
             }
         });
@@ -70,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let enteredCode = '';
         digits.forEach(digit => enteredCode += digit.value);
 
-        if (enteredCode === '1234') {
+        if (enteredCode === '12345678') {
             successModal.show();
         } else {
             treasureChest.classList.add('shake');
@@ -84,13 +86,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function unlockChest() {
         codeInput.style.display = 'none';
 
-        // Hilangkan rune (fade-out lalu hapus)
-        const runes = document.querySelectorAll('.rune, #runes');
-        runes.forEach(rune => {
-            rune.style.transition = 'opacity 0.5s ease';
-            rune.style.opacity = '0';
-            setTimeout(() => rune.remove(), 500);
-        });
+        // Hilangkan rune dengan animasi, JANGAN dihapus dari DOM!
+        runeContainer.style.transition = 'opacity 0.5s ease';
+        runeContainer.style.opacity = '0';
+
+        // Tampilkan moai
+        moai.style.transition = 'opacity 0.5s, transform 0.5s';
+        moai.style.opacity = '1';
+        moai.style.transform = 'scale(1)';
 
         // Efek glitter
         glitterEffect.style.transition = 'opacity 0.2s ease';
@@ -112,20 +115,26 @@ document.addEventListener('DOMContentLoaded', function() {
             chestLid.style.transform = 'rotateX(180deg)';
             setTimeout(() => {
                 chestContent.style.opacity = '1';
-                moai.style.opacity = '1';
-                moai.style.transform = 'scale(1)';
                 submitBtn.dataset.state = 'back';
                 submitBtn.textContent = 'Back';
-                backBtn.style.display = 'inline-block';
+                backBtn.style.display = 'none';
             }, 500);
         }, 500);
     }
 
     function resetChest() {
         chestLid.style.transform = 'rotateX(0deg)';
-        chestContent.style.opacity = '0';
+        chestContent.style.opacity = '1';
+
+        // Tampilkan runes lagi
+        runeContainer.style.transition = 'opacity 0.5s ease';
+        runeContainer.style.opacity = '1';
+
+        // Hilangkan moai
+        moai.style.transition = 'opacity 0.5s, transform 0.5s';
         moai.style.opacity = '0';
         moai.style.transform = 'scale(0.7)';
+
         backBtn.style.display = 'none';
         submitBtn.dataset.state = 'submit';
         submitBtn.textContent = 'Unlock Chest';
